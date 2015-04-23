@@ -25,27 +25,27 @@ pdf: ${BASE}.pdf
 view: view-ps
 
 # --- PDF ---------------------------------------
-.dvi.pdf:
+${BASE}.pdf: ${BASE}.dvi
 	@echo "PDF  $<"
 	@dvipdf -q $<
 
 # --- PS ----------------------------------------
-.dvi.ps:
+${BASE}.ps: ${BASE}.dvi
 	@echo "PS   $<"
 	@dvips -q $<
 
 # --- DVI ---------------------------------------
-${BASE}.dvi: ${BASE}.bbl ${BASE}.tex |${BASE}.toc ${BASE}.aux 
+${BASE}.dvi: ${BASE}.bbl ${BASE}.tex ${BASE}.toc ${BASE}.aux 
 	@echo "TEX  ${BASE}.tex"
 	@latex ${BASE}.tex >/dev/null
 
 # --- TOC ---------------------------------------
 ${BASE}.toc: ${BASE}.tex
 	@echo "TOC  ${BASE}.tex"
-	@latex -draftmode ${BASE}.tex >/dev/null
+	@latex ${BASE}.tex >/dev/null
 
 # --- AUX ---------------------------------------
-${BASE}.aux: ${SOURCES}.bib ${BASE}.tex 
+${BASE}.aux: ${BASE}.tex 
 	@echo "AUX  ${BASE}.tex"
 	@latex -draftmode ${BASE}.tex >/dev/null
 
