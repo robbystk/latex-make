@@ -35,17 +35,17 @@ view: view-ps
 	@dvips -q $<
 
 # --- DVI ---------------------------------------
-${BASE}.dvi: ${BASE}.aux ${BASE}.toc ${BASE}.tex
+${BASE}.dvi: ${BASE}.aux ${BASE}.bbl ${BASE}.toc ${BASE}.tex
 	@echo "TEX  ${BASE}.tex"
 	@latex ${BASE}.tex >/dev/null
 
 # --- TOC ---------------------------------------
 ${BASE}.toc: ${BASE}.tex
-	@echo "TOC  ${BASE}.tex"
+	@echo "TEX  ${BASE}.tex"
 	@latex -draftmode ${BASE}.tex >/dev/null
 
 # --- AUX ---------------------------------------
-${BASE}.aux: ${BASE}.tex ${BASE}.bbl
+${BASE}.aux: ${BASE}.tex 
 	@echo "TEX  ${BASE}.tex"
 	@latex -draftmode ${BASE}.tex >/dev/null
 
