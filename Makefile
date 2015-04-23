@@ -35,22 +35,22 @@ view: view-ps
 	@dvips -q $<
 
 # --- DVI ---------------------------------------
-${BASE}.dvi: ${BASE}.aux ${BASE}.bbl ${BASE}.toc ${BASE}.tex
+${BASE}.dvi: ${BASE}.bbl ${BASE}.tex |${BASE}.toc ${BASE}.aux 
 	@echo "TEX  ${BASE}.tex"
 	@latex ${BASE}.tex >/dev/null
 
 # --- TOC ---------------------------------------
 ${BASE}.toc: ${BASE}.tex
-	@echo "TEX  ${BASE}.tex"
+	@echo "TOC  ${BASE}.tex"
 	@latex -draftmode ${BASE}.tex >/dev/null
 
 # --- AUX ---------------------------------------
-${BASE}.aux: ${BASE}.tex 
-	@echo "TEX  ${BASE}.tex"
+${BASE}.aux: ${SOURCES}.bib ${BASE}.tex 
+	@echo "AUX  ${BASE}.tex"
 	@latex -draftmode ${BASE}.tex >/dev/null
 
 # --- BBL ---------------------------------------
-${BASE}.bbl: ${BASE}.aux ${SOURCES}.bib 
+${BASE}.bbl: ${SOURCES}.bib |${BASE}.aux 
 	@echo "BIB  ${BASE}.aux"
 	@bibtex ${BASE}.aux >/dev/null
 
@@ -59,7 +59,7 @@ view-%: ${BASE}.%
 	${VIEWER} $<
 
 clean:
-	@rm -vf *.aux *.log *.dvi *.lof *.lot *.toc
+	@rm -vf *.aux *.log *.dvi *.lof *.lot *.toc *.bbl *.blg
 
 powerclean: clean
 	@rm -vf *.pdf *.ps
