@@ -8,7 +8,7 @@ VIEWER  = zathura
 .SUFFIXES:
 .SUFFIXES:.ps .pdf .dvi .tex .toc .aux .bbl .bib
 
-.PHONY: default all dvi ps pdf view view-ps view-pdf clean powerclean
+.PHONY: default all dvi ps pdf view clean powerclean
 
 # What should 'make' run by default ?
 default: pdf
