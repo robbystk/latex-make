@@ -22,7 +22,7 @@ ps:  ${BASE}.ps
 pdf: ${BASE}.pdf
 
 # Default view
-view: view-ps
+view: view-pdf
 
 # --- PDF ---------------------------------------
 ${BASE}.pdf: ${BASE}.dvi
