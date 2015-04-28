@@ -56,7 +56,7 @@ ${BASE}.bbl: ${SOURCES}.bib |${BASE}.aux
 
 # --- VIEW --------------------------------------
 view-%: ${BASE}.%
-	${VIEWER} $<
+	${VIEWER} $< &
 
 clean:
 	@rm -vf *.aux *.log *.dvi *.lof *.lot *.toc *.bbl *.blg
