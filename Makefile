@@ -47,9 +47,9 @@ view: view-pdf
 	@latex $< >/dev/null
 
 # --- BBL ---------------------------------------
-%.bbl: %.tex *.bib %.aux 
-	@echo "BIB  $*.aux"
-	@bibtex $* >/dev/null
+%.bbl: %.aux %.tex *.bib 
+	@echo "BIB  $<"
+	@bibtex $< >/dev/null
 
 # --- AUX ---------------------------------------
 %.aux: %.tex 
