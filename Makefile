@@ -1,62 +1,64 @@
-# File names
-BASE	= proposal
-SOURCES = sources
-
 # How to view output files
 VIEWER  = zathura
 
+# Clear built-in rules
 .SUFFIXES:
-.SUFFIXES:.ps .pdf .dvi .tex .toc .aux .bbl .bib
 
 .PHONY: default all dvi ps pdf view clean powerclean
 
-# What should 'make' run by default ?
+# Figure out what we're making
+input = $(patsubst %.tex,%,$(wildcard *.tex))
+
+# Do not delete these files
+secondaries = .aux .bbl .dvi
+.SECONDARY: $(patsubst .%,$(input).%,$(secondaries))
+
 default: pdf
 
 # build everything
 all: ps pdf view-pdf
 
 # The output files
-dvi: ${BASE}.dvi
-ps:  ${BASE}.ps
-pdf: ${BASE}.pdf
+dvi: *.dvi
+ps:  *.ps
+pdf: *.pdf
 
 # Default view
 view: view-pdf
 
 # --- PDF ---------------------------------------
-${BASE}.pdf: ${BASE}.dvi
+%.pdf: %.dvi
 	@echo "PDF  $<"
 	@dvipdf -q $<
 
 # --- PS ----------------------------------------
-${BASE}.ps: ${BASE}.dvi
+%.ps: %.dvi
 	@echo "PS   $<"
 	@dvips -q $<
 
 # --- DVI ---------------------------------------
-${BASE}.dvi: ${BASE}.bbl ${BASE}.tex ${BASE}.toc ${BASE}.aux 
-	@echo "TEX  ${BASE}.tex"
-	@latex ${BASE}.tex >/dev/null
+%.dvi: %.tex %.toc
+	@echo "TEX  $<"
+	@latex $< >/dev/null
 
 # --- TOC ---------------------------------------
-${BASE}.toc: ${BASE}.tex
-	@echo "TOC  ${BASE}.tex"
-	@latex ${BASE}.tex >/dev/null
-
-# --- AUX ---------------------------------------
-${BASE}.aux: ${BASE}.tex 
-	@echo "AUX  ${BASE}.tex"
-	@latex -draftmode ${BASE}.tex >/dev/null
+%.toc: %.tex %.bbl
+	@echo "TOC  $<"
+	@latex $< >/dev/null
 
 # --- BBL ---------------------------------------
-${BASE}.bbl: ${SOURCES}.bib |${BASE}.aux 
-	@echo "BIB  ${BASE}.aux"
-	@bibtex ${BASE}.aux >/dev/null
+%.bbl: %.tex *.bib %.aux 
+	@echo "BIB  $*.aux"
+	@bibtex $* >/dev/null
+
+# --- AUX ---------------------------------------
+%.aux: %.tex 
+	@echo "AUX  $<"
+	@latex -draftmode $< >/dev/null
 
 # --- VIEW --------------------------------------
-view-%: ${BASE}.%
-	${VIEWER} $< &
+view-%: %
+	${VIEWER} *.$* &
 
 clean:
 	@rm -vf *.aux *.log *.dvi *.lof *.lot *.toc *.bbl *.blg
