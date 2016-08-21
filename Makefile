@@ -42,14 +42,15 @@ view: view-pdf
 	@latex $< >/dev/null
 
 # --- TOC ---------------------------------------
-%.toc: %.tex %.bbl
+%.toc: %.tex
 	@echo "TOC  $<"
 	@latex $< >/dev/null
 
+# If using sources, add BBL dependency to TOC
 # --- BBL ---------------------------------------
-%.bbl: %.aux %.tex *.bib 
-	@echo "BIB  $<"
-	@bibtex $< >/dev/null
+# %.bbl: %.aux %.tex *.bib 
+# 	@echo "BIB  $<"
+# 	@bibtex $< >/dev/null
 
 # --- AUX ---------------------------------------
 %.aux: %.tex 
@@ -65,4 +66,3 @@ clean:
 
 powerclean: clean
 	@rm -vf *.pdf *.ps
-
