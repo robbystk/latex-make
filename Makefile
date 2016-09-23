@@ -62,7 +62,7 @@ view-%: %
 	${VIEWER} *.$* &
 
 clean:
-	@rm -vf *.aux *.log *.dvi *.lof *.lot *.toc *.bbl *.blg
+	@rm -vf *.aux *.log *.dvi *.lof *.lot *.toc *.bbl *.blg *.out
 
 powerclean: clean
 	@rm -vf *.pdf *.ps
