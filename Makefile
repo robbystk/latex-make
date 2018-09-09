@@ -48,12 +48,12 @@ view: view-pdf
 
 # If using sources, add BBL dependency to TOC
 # --- BBL ---------------------------------------
-# %.bbl: %.aux %.tex *.bib 
+# %.bbl: %.aux %.tex *.bib
 # 	@echo "BIB  $<"
 # 	@bibtex $< >/dev/null
 
 # --- AUX ---------------------------------------
-%.aux: %.tex 
+%.aux: %.tex
 	@echo "AUX  $<"
 	@latex -draftmode $< >/dev/null
 
