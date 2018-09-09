@@ -27,24 +27,14 @@ pdf: *.pdf
 view: view-pdf
 
 # --- PDF ---------------------------------------
-%.pdf: %.dvi
-	@echo "PDF  $<"
-	@dvipdfmx -q $<
-
-# --- PS ----------------------------------------
-%.ps: %.dvi
-	@echo "PS   $<"
-	@dvips -q $<
-
-# --- DVI ---------------------------------------
-%.dvi: %.tex %.toc
+%.pdf: %.tex %.toc
 	@echo "TEX  $<"
-	@latex $< >/dev/null
+	@pdflatex $< >/dev/null
 
 # --- TOC ---------------------------------------
 %.toc: %.tex
 	@echo "TOC  $<"
-	@latex $< >/dev/null
+	@pdflatex $< >/dev/null
 
 # If using sources, add BBL dependency to TOC
 # --- BBL ---------------------------------------
@@ -55,7 +45,7 @@ view: view-pdf
 # --- AUX ---------------------------------------
 %.aux: %.tex
 	@echo "AUX  $<"
-	@latex -draftmode $< >/dev/null
+	@pdflatex -draftmode $< >/dev/null
 
 # --- VIEW --------------------------------------
 view-%: %
